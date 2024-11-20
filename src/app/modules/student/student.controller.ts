@@ -30,7 +30,23 @@ const getAllStudentsFromDB = async (req: Request, res: Response) => {
   }
 }
 
+const getSingleStudentFromDB = async (req: Request, res: Response) => {
+  try {
+    const {id} = req.params
+    const result = await StudentService.getSingleStudentFromDB(id)
+
+    res
+      .status(200)
+      .json({ message: 'Student fetched successfully', data: result })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Failed to fetch student', error: (error as Error).message })
+  }
+}
+
 export const StudentController = {
   createStudent,
-  getAllStudentsFromDB
+  getAllStudentsFromDB,
+  getSingleStudentFromDB
 }
