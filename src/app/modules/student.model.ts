@@ -1,29 +1,33 @@
-import { IStudent, UserName, Guardian, LocalGuardian } from './student/student.interface'
+import {
+  IStudent,
+  UserName,
+  Guardian,
+  LocalGuardian,
+} from './student/student.interface'
 import { Schema, model, connect } from 'mongoose'
 
-
 const UserNameSchema = new Schema<UserName>({
-    firstName: { type: String, required: true },
-    middleName: { type: String },
-    lastName: { type: String, required: true },
+  firstName: { type: String, required: true },
+  middleName: { type: String },
+  lastName: { type: String, required: true },
 })
 
 const GuardianSchema = new Schema<Guardian>({
-    name: UserNameSchema,
-    email: { type: String },
-    contactNo: { type: String, required: true },
-    occupation: { type: String },
-    relation: { type: String, required: true },
+  name: UserNameSchema,
+  email: { type: String },
+  contactNo: { type: String, required: true },
+  occupation: { type: String },
+  relation: { type: String, required: true },
 })
 
 const LocalGuardianSchema = new Schema<LocalGuardian>({
-    name: UserNameSchema,
-    email: { type: String },
-    contactNo: { type: String, required: true },
-    occupation: { type: String },
-    relation: { type: String, required: true },
-    presentAddress: { type: String, required: true },
-    permanentAddress: { type: String, required: true },
+  name: UserNameSchema,
+  email: { type: String },
+  contactNo: { type: String, required: true },
+  occupation: { type: String },
+  relation: { type: String, required: true },
+  presentAddress: { type: String, required: true },
+  permanentAddress: { type: String, required: true },
 })
 
 const studentSchema = new Schema<IStudent>({

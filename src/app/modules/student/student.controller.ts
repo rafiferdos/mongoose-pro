@@ -3,7 +3,7 @@ import { StudentService } from './student.service'
 
 const createStudent = async (req: Request, res: Response) => {
   try {
-    const {student: studentData} = req.body
+    const { student: studentData } = req.body
     const result = await StudentService.createStudentIntoDB(studentData)
 
     res
@@ -12,7 +12,10 @@ const createStudent = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Failed to create student', error: (error as Error).message })
+      .json({
+        message: 'Failed to create student',
+        error: (error as Error).message,
+      })
   }
 }
 
@@ -26,13 +29,16 @@ const getAllStudentsFromDB = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Failed to fetch students', error: (error as Error).message })
+      .json({
+        message: 'Failed to fetch students',
+        error: (error as Error).message,
+      })
   }
 }
 
 const getSingleStudentFromDB = async (req: Request, res: Response) => {
   try {
-    const {id} = req.params
+    const { id } = req.params
     const result = await StudentService.getSingleStudentFromDB(id)
 
     res
@@ -41,12 +47,15 @@ const getSingleStudentFromDB = async (req: Request, res: Response) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Failed to fetch student', error: (error as Error).message })
+      .json({
+        message: 'Failed to fetch student',
+        error: (error as Error).message,
+      })
   }
 }
 
 export const StudentController = {
   createStudent,
   getAllStudentsFromDB,
-  getSingleStudentFromDB
+  getSingleStudentFromDB,
 }
