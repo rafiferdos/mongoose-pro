@@ -5,7 +5,6 @@ import studentValidationSchema from './student.validation'
 
 const createStudent = async (req: Request, res: Response) => {
   try {
-    
     const { student: studentData } = req.body
     const zodParsedData = studentValidationSchema.parse(studentData)
     const result = await StudentService.createStudentIntoDB(zodParsedData)
@@ -16,10 +15,20 @@ const createStudent = async (req: Request, res: Response) => {
       success: true,
     })
   } catch (error) {
+    // Handle Zod validation errors specifically
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation Error',
+        errors: error,
+      })
+    }
+
+    // Handle other errors
     res.status(500).json({
+      success: false,
       message: 'Failed to create student',
       error: (error as Error).message,
-      success: false,
     })
   }
 }
