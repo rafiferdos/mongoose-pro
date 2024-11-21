@@ -7,9 +7,20 @@ import {
 import { Schema, model, connect } from 'mongoose'
 
 const UserNameSchema = new Schema<UserName>({
-  firstName: { type: String, required: [true, 'First Name is required'] },
-  middleName: { type: String },
-  lastName: { type: String, required: [true, 'Last Name is required'] },
+  firstName: {
+    type: String,
+    required: [true, 'First Name is required'],
+    maxlength: [30, 'First Name should not be more than 30 characters'],
+  },
+  middleName: {
+    type: String,
+    maxlength: [30, 'Middle Name should not be more than 30 characters'],
+  },
+  lastName: {
+    type: String,
+    required: [true, 'Last Name is required'],
+    maxlength: [30, 'Last Name should not be more than 30 characters'],
+  },
 })
 
 const GuardianSchema = new Schema<Guardian>({
