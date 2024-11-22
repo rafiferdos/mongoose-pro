@@ -65,6 +65,11 @@ const StudentValidationSchema = z.object({
     .string()
     .email('Email is invalid')
     .nonempty('Email is required for Student'),
+  password: z
+    .string()
+    .nonempty('Password is required for Student')
+    .min(6, 'Password should be at least 6 characters')
+    .max(20, 'Password should not be more than 20 characters'),
   gender: z.enum(['Male', 'Female'], {
     errorMap: () => ({
       message: 'Gender should be either Male or Female',

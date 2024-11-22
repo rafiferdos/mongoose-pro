@@ -135,6 +135,10 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>({
       message: 'Email is invalid',
     },
   },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+  },
   gender: {
     type: String,
     enum: {

@@ -27,6 +27,7 @@ export type TStudent = {
   id: string
   name: TUserName
   email: string
+  password: string
   age: number
   gender: 'Male' | 'Female'
   avatar?: string
