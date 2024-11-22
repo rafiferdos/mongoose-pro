@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { StudentService } from './student.service'
 import { z } from 'zod'
+import { StudentService } from './student.service'
 import studentValidationSchema from './student.validation'
 
 const createStudent = async (req: Request, res: Response) => {
@@ -27,7 +27,7 @@ const createStudent = async (req: Request, res: Response) => {
     // Handle other errors
     res.status(500).json({
       success: false,
-      message: 'Failed to create student',
+      message: (error as Error).message || 'Failed to create student',
       error: (error as Error).message,
     })
   }

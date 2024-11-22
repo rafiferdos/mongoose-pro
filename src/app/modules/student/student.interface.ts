@@ -1,20 +1,20 @@
-import { Schema, model, connect } from 'mongoose'
+import { Model } from 'mongoose'
 
-export type UserName = {
+export type TUserName = {
   firstName: string
   middleName?: string
   lastName: string
 }
-export type Guardian = {
-  name: UserName
+export type TGuardian = {
+  name: TUserName
   email?: string
   contactNo: string
   occupation?: string
   relation: string
 }
 
-export type LocalGuardian = {
-  name: UserName
+export type TLocalGuardian = {
+  name: TUserName
   email?: string
   contactNo: string
   occupation?: string
@@ -23,9 +23,9 @@ export type LocalGuardian = {
   permanentAddress: string
 }
 
-export type IStudent = {
+export type TStudent = {
   id: string
-  name: UserName
+  name: TUserName
   email: string
   age: number
   gender: 'Male' | 'Female'
@@ -36,8 +36,14 @@ export type IStudent = {
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-'
   presentAddress: string
   permanentAddress: string
-  guardianDetails: Guardian
-  localGuardianDetails: LocalGuardian
+  guardianDetails: TGuardian
+  localGuardianDetails: TLocalGuardian
   profileImage?: string
   isActive: boolean
 }
+
+export interface StudentMethod {
+  isUserExists(id: string): Promise<TStudent | null>
+}
+
+export type StudentModel = Model<TStudent, Record<string, never>, StudentMethod>
