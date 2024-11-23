@@ -1,5 +1,7 @@
+import bcrypt from 'bcrypt'
 import { Schema, model } from 'mongoose'
 import validator from 'validator'
+import config from '../config'
 import {
   StudentMethod,
   StudentModel,
@@ -186,7 +188,37 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>({
     required: [true, 'Status is required'],
     default: true,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  }
 })
+
+//hash password before save
+studentSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bcrypt_salt_rounds),
+  )
+  next()
+})
+
+// post save middleware / hook
+studentSchema.post('save', async function(doc,next){
+  doc.password='********'
+  next()
+})
+
+// before find filter non deleted students
+studentSchema.pre(['find', 'findOne'], function() {
+  this.where({ isDeleted: false });
+});
+
+// before find filter non deleted students aggregation
+studentSchema.pre('aggregate', function(next) {
+  this.pipeline().unshift({ $match: { isDeleted: false } });
+  next()
+});
 
 // custom instance method
 studentSchema.methods.isUserExists = async function (id: string) {

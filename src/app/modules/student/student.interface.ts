@@ -41,6 +41,7 @@ export type TStudent = {
   localGuardianDetails: TLocalGuardian
   profileImage?: string
   isActive: boolean
+  isDeleted: boolean
 }
 
 export interface StudentMethod {

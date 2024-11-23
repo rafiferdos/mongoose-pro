@@ -17,7 +17,7 @@ const createStudent = async (req: Request, res: Response) => {
   } catch (error) {
     // Handle Zod validation errors specifically
     if (error instanceof z.ZodError) {
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         message: 'Validation Error',
         errors: error,
@@ -63,8 +63,26 @@ const getSingleStudentFromDB = async (req: Request, res: Response) => {
   }
 }
 
+const deleteStudent = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    await StudentService.deleteStudent(id)
+
+    res.status(200).json({
+      message: 'Student deleted successfully',
+      success: true,
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to delete student',
+      error: (error as Error).message,
+    })
+  }
+}
+
 export const StudentController = {
   createStudent,
   getAllStudentsFromDB,
   getSingleStudentFromDB,
+  deleteStudent
 }

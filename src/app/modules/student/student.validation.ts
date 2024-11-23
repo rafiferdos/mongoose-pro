@@ -89,6 +89,7 @@ const StudentValidationSchema = z.object({
   localGuardianDetails: LocalGuardianValidationSchema,
   profileImage: z.string().optional().or(z.literal('')),
   isActive: z.boolean().default(true),
+  isDeleted: z.boolean().default(false),
 })
 
 // Exported Zod schema
