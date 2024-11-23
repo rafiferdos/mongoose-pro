@@ -9,13 +9,14 @@ const createStudentIntoDB = async (studentData: TStudent) =>
 const getAllStudentsFromDB = async () => await Student.find()
 
 const getSingleStudentFromDB = async (id: string) =>
-  await Student.findOne({ id: id })
+  await Student.aggregate([{ $match: { id: id } }])
 
-const deleteStudent = async (id: string) => await Student.updateOne({ id: id }, { isDeleted: true })
+const deleteStudent = async (id: string) =>
+  await Student.updateOne({ id: id }, { isDeleted: true })
 
 export const StudentService = {
   createStudentIntoDB,
   getAllStudentsFromDB,
   getSingleStudentFromDB,
-  deleteStudent
+  deleteStudent,
 }
