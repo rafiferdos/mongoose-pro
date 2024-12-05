@@ -1,21 +1,26 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { StudentService } from './student.service'
 
-const getAllStudentsFromDB = async (req: Request, res: Response) => {
+const getAllStudentsFromDB = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const result = await StudentService.getAllStudentsFromDB()
     res
       .status(200)
       .json({ message: 'Students fetched successfully', data: result })
   } catch (error) {
-    res.status(500).json({
-      message: 'Failed to fetch students',
-      error: (error as Error).message,
-    })
+    next(error)
   }
 }
 
-const getSingleStudentFromDB = async (req: Request, res: Response) => {
+const getSingleStudentFromDB = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params
     const result = await StudentService.getSingleStudentFromDB(id)
@@ -24,14 +29,15 @@ const getSingleStudentFromDB = async (req: Request, res: Response) => {
       .status(200)
       .json({ message: 'Student fetched successfully', data: result })
   } catch (error) {
-    res.status(500).json({
-      message: 'Failed to fetch student',
-      error: (error as Error).message,
-    })
+    next(error)
   }
 }
 
-const deleteStudent = async (req: Request, res: Response) => {
+const deleteStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params
     await StudentService.deleteStudent(id)
@@ -41,10 +47,7 @@ const deleteStudent = async (req: Request, res: Response) => {
       success: true,
     })
   } catch (error) {
-    res.status(500).json({
-      message: 'Failed to delete student',
-      error: (error as Error).message,
-    })
+    next(error)
   }
 }
 
