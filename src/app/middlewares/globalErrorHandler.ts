@@ -3,7 +3,7 @@
 import { NextFunction, Request, Response } from 'express'
 import app from '../../app'
 
-export const globalErrorHandler = (
+const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
@@ -20,3 +20,5 @@ export const globalErrorHandler = (
     })
   })
 }
+
+export default globalErrorHandler
