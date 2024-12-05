@@ -8,7 +8,8 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   const userData: Partial<TUser> = {}
   userData.password = password || (config.default_password as string)
   userData.role = 'student'
-  userData.id = '2030100001'
+  // make id in yyyymmddhhmmss format
+  userData.id = new Date().toISOString().replace(/\D/g, '').slice(0, 14)
   const newUser = await User.create(userData)
   if (Object.keys(newUser).length) {
       studentData.id = newUser.id
