@@ -1,7 +1,6 @@
-import bcrypt from 'bcrypt'
 import { Schema, model } from 'mongoose'
 import validator from 'validator'
-import config from '../../config'
+
 import {
   StudentMethod,
   StudentModel,
@@ -144,10 +143,6 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>(
         message: 'Email is invalid',
       },
     },
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-    },
     gender: {
       type: String,
       enum: {
@@ -202,24 +197,9 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>(
   },
 )
 
-//hash password before save
-studentSchema.pre('save', async function (next) {
-  this.password = await bcrypt.hash(
-    this.password,
-    Number(config.bcrypt_salt_rounds),
-  )
-  next()
-})
-
 //fullname virtual
 studentSchema.virtual('fullName').get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`
-})
-
-// post save middleware / hook
-studentSchema.post('save', async function (doc, next) {
-  doc.password = '********'
-  next()
 })
 
 // before find filter non deleted students
