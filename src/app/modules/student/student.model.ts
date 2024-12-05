@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { Schema, model } from 'mongoose'
 import validator from 'validator'
-import config from '../config'
+import config from '../../config'
 import {
   StudentMethod,
   StudentModel,
@@ -9,7 +9,7 @@ import {
   TLocalGuardian,
   TStudent,
   TUserName,
-} from './student/student.interface'
+} from './student.interface'
 
 const UserNameSchema = new Schema<TUserName>({
   firstName: {
@@ -127,6 +127,12 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>(
       trim: true,
       required: [true, 'First Name, Last Name are required for Student Name'],
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'User ID is required'],
+      unique: true,
+    },
     age: { type: Number, required: [true, 'Age is required for Student'] },
     email: {
       trim: true,
@@ -184,11 +190,6 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>(
       required: [true, 'Local guardian details are required'],
     },
     profileImage: { type: String, trim: true },
-    isActive: {
-      type: Boolean,
-      required: [true, 'Status is required'],
-      default: true,
-    },
     isDeleted: {
       type: Boolean,
       default: false,

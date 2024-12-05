@@ -28,6 +28,7 @@ const userSchema = new Schema<TUser>(
       type: String,
       required: true,
       enum: ['in-progress', 'blocked'] as TUserStatus[],
+      default: 'in-progress',
     },
   },
   {

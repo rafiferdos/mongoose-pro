@@ -1,37 +1,5 @@
 import { Request, Response } from 'express'
-import { z } from 'zod'
 import { StudentService } from './student.service'
-import studentValidationSchema from './student.validation'
-
-const createStudent = async (req: Request, res: Response) => {
-  try {
-    const { student: studentData } = req.body
-    const zodParsedData = studentValidationSchema.parse(studentData)
-    const result = await StudentService.createStudentIntoDB(zodParsedData)
-
-    res.status(200).json({
-      message: 'Student created successfully',
-      data: result,
-      success: true,
-    })
-  } catch (error) {
-    // Handle Zod validation errors specifically
-    if (error instanceof z.ZodError) {
-      res.status(400).json({
-        success: false,
-        message: 'Validation Error',
-        errors: error,
-      })
-    }
-
-    // Handle other errors
-    res.status(500).json({
-      success: false,
-      message: (error as Error).message || 'Failed to create student',
-      error: (error as Error).message,
-    })
-  }
-}
 
 const getAllStudentsFromDB = async (req: Request, res: Response) => {
   try {
@@ -81,8 +49,7 @@ const deleteStudent = async (req: Request, res: Response) => {
 }
 
 export const StudentController = {
-  createStudent,
   getAllStudentsFromDB,
   getSingleStudentFromDB,
-  deleteStudent
+  deleteStudent,
 }

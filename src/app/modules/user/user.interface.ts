@@ -9,3 +9,9 @@ export type TUser = {
   isDeleted: boolean
   status: TUserStatus
 }
+
+export type TNewUser = {
+  id: string
+  password: string
+  role: TUserRole
+}
