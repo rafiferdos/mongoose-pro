@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import cors from 'cors'
-import express, { Application, NextFunction, Request, Response } from 'express'
+import express, { Application, Request, Response } from 'express'
+import { globalErrorHandler } from './app/middlewares/globalErrorHandler'
 import { StudentRoutes } from './app/modules/student/student.route'
 import { userRoutes } from './app/modules/user/user.route'
 
@@ -18,16 +17,7 @@ app.get('/', function (req: Request, res: Response) {
   res.send('Hello World')
 })
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  const statusCode = 500
-  const message = err.message || 'Something went wrong'
-
-  res.status(statusCode).json({
-    success: false,
-    message,
-    error: err,
-  })
-})
+app.use(globalErrorHandler)
 
 app.listen(3000)
 export default app
