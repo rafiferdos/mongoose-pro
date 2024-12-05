@@ -10,7 +10,7 @@ const getAllStudentsFromDB = async (
   try {
     const result = await StudentService.getAllStudentsFromDB()
     sendResponse(res, {
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       success: true,
       message: 'Students fetched successfully',
       data: result,
@@ -30,7 +30,7 @@ const getSingleStudentFromDB = async (
     const result = await StudentService.getSingleStudentFromDB(id)
 
     sendResponse(res, {
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       success: true,
       message: 'Student fetched successfully',
       data: result,
@@ -50,7 +50,7 @@ const deleteStudent = async (
     await StudentService.deleteStudent(id)
 
     sendResponse(res, {
-      statusCode: 200,
+      statusCode: httpStatus.OK,
       success: true,
       message: 'Student deleted successfully',
     })
