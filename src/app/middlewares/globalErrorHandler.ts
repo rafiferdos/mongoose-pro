@@ -12,7 +12,7 @@ const globalErrorHandler = (
   app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const statusCode = 500
     const message = err.message || 'Something went wrong'
-
+    console.log(err)
     res.status(statusCode).json({
       success: false,
       message,
