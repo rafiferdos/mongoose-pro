@@ -1,12 +1,8 @@
-import { NextFunction, Request, Response } from 'express'
+import { RequestHandler } from 'express'
 import sendResponse from '../../utils/sendResponse'
 import { StudentService } from './student.service'
 
-const getAllStudentsFromDB = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const getAllStudentsFromDB: RequestHandler = async (req, res, next) => {
   try {
     const result = await StudentService.getAllStudentsFromDB()
     sendResponse(res, {
@@ -20,11 +16,7 @@ const getAllStudentsFromDB = async (
   }
 }
 
-const getSingleStudentFromDB = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const getSingleStudentFromDB: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params
     const result = await StudentService.getSingleStudentFromDB(id)
@@ -40,11 +32,7 @@ const getSingleStudentFromDB = async (
   }
 }
 
-const deleteStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const deleteStudent: RequestHandler = async (req, res, next) => {
   try {
     const { id } = req.params
     await StudentService.deleteStudent(id)
