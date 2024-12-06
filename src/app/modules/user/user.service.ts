@@ -12,10 +12,10 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   userData.id = new Date().toISOString().replace(/\D/g, '').slice(0, 14)
   const newUser = await User.create(userData)
   if (Object.keys(newUser).length) {
-      studentData.id = newUser.id
-      studentData.user = newUser._id
-      const newStudent = await Student.create(studentData)
-      return newStudent
+    studentData.id = newUser.id
+    studentData.user = newUser._id
+    const newStudent = await Student.create(studentData)
+    return newStudent
   }
 }
 
