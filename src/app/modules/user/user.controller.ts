@@ -1,24 +1,22 @@
-import { RequestHandler } from 'express'
+import { catchAsync } from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { UserServices } from './user.service'
 
-const createStudent : RequestHandler = async (
-  req,
-  res,
-  next,
-) => {
-  UserServices.createStudentIntoDB(req.body.password, req.body.student)
-    .then((result) =>
-      sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Student created successfully',
-        data: result,
-      }),
-    )
-    .catch((error) => next(error))
-}
+// ===================== UserControllers =====================
 
+// Create a student
+const createStudent = catchAsync(async (req, res) => {
+  const result = await UserServices.createStudentIntoDB(
+    req.body.password,
+    req.body.student,
+  )
+  sendResponse(res, {
+    statusCode: 201,
+    success: true,
+    message: 'Student created successfully',
+    data: result,
+  })
+})
 export const UserControllers = {
   createStudent,
 }
