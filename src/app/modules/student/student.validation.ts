@@ -54,7 +54,7 @@ const LocalGuardianValidationSchema = z.object({
 })
 
 // Zod schema for Student
-export const StudentValidationSchema = z.object({
+export const CreateStudentValidationSchema = z.object({
   body: z.object({
     password: z
       .string()
@@ -95,5 +95,5 @@ export const StudentValidationSchema = z.object({
 
 // Exported Zod schema
 export const StudentValidationSchemas = {
-  StudentValidationSchema,
+  CreateStudentValidationSchema,
 }
