@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes'
 import { catchAsync } from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
 import { StudentService } from './student.service'
@@ -8,7 +9,7 @@ import { StudentService } from './student.service'
 const getAllStudentsFromDB = catchAsync(async (req, res) => {
   const result = await StudentService.getAllStudentsFromDB()
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Students fetched successfully',
     data: result,
@@ -20,7 +21,7 @@ const getSingleStudentFromDB = catchAsync(async (req, res) => {
   const { id } = req.params
   const result = await StudentService.getSingleStudentFromDB(id)
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Student fetched successfully',
     data: result,
@@ -32,9 +33,10 @@ const deleteStudent = catchAsync(async (req, res) => {
   const { id } = req.params
   await StudentService.deleteStudent(id)
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: StatusCodes.OK,
     success: true,
     message: 'Student deleted successfully',
+    data: null, // may occur error
   })
 })
 
