@@ -55,40 +55,42 @@ const LocalGuardianValidationSchema = z.object({
 
 // Zod schema for Student
 export const StudentValidationSchema = z.object({
-  id: z.string().nonempty('ID is required'),
-  name: UserNameValidationSchema,
-  age: z
-    .number()
-    .int('Age must be an integer')
-    .min(0, 'Age must be non-negative'),
-  email: z
-    .string()
-    .email('Email is invalid')
-    .nonempty('Email is required for Student'),
-  password: z
-    .string()
-    .nonempty('Password is required for Student')
-    .min(6, 'Password should be at least 6 characters')
-    .max(20, 'Password should not be more than 20 characters'),
-  gender: z.enum(['Male', 'Female'], {
-    errorMap: () => ({
-      message: 'Gender should be either Male or Female',
+  body: z.object({
+    password: z
+      .string()
+      .nonempty('Password is required for Student')
+      .min(6, 'Password should be at least 6 characters')
+      .max(20, 'Password should not be more than 20 characters'),
+    student: z.object({
+      name: UserNameValidationSchema,
+      age: z
+        .number()
+        .int('Age must be an integer')
+        .min(0, 'Age must be non-negative'),
+      email: z
+        .string()
+        .email('Email is invalid')
+        .nonempty('Email is required for Student'),
+      gender: z.enum(['Male', 'Female'], {
+        errorMap: () => ({
+          message: 'Gender should be either Male or Female',
+        }),
+      }),
+      dateOfBirth: z.string().optional(),
+      contactNo: z.string().nonempty('Contact No is required for Student'),
+      emergencyContactNo: z
+        .string()
+        .nonempty('Emergency Contact No is required for Student'),
+      bloodGroup: z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .optional(),
+      presentAddress: z.string().nonempty('Present Address is required'),
+      permanentAddress: z.string().nonempty('Permanent Address is required'),
+      guardianDetails: GuardianValidationSchema,
+      localGuardianDetails: LocalGuardianValidationSchema,
+      profileImage: z.string().optional().or(z.literal('')),
     }),
   }),
-  dateOfBirth: z.string().optional(),
-  contactNo: z.string().nonempty('Contact No is required for Student'),
-  emergencyContactNo: z
-    .string()
-    .nonempty('Emergency Contact No is required for Student'),
-  bloodGroup: z
-    .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-    .optional(),
-  presentAddress: z.string().nonempty('Present Address is required'),
-  permanentAddress: z.string().nonempty('Permanent Address is required'),
-  guardianDetails: GuardianValidationSchema,
-  localGuardianDetails: LocalGuardianValidationSchema,
-  profileImage: z.string().optional().or(z.literal('')),
-  isDeleted: z.boolean().default(false),
 })
 
 // Exported Zod schema
