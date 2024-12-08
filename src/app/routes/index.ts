@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { academicSemesterRoutes as AcademicSemesterRoutes } from '../modules/academicSemester/academicSemester.route'
+import { AcademicSemesterRoutes } from '../modules/academicSemester/academicSemester.route'
 import { StudentRoutes } from '../modules/student/student.route'
 import { UserRoutes } from '../modules/user/user.route'
 
