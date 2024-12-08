@@ -32,7 +32,7 @@ export type TStudent = {
   age: number
   gender: 'Male' | 'Female'
   avatar?: string
-  dateOfBirth?: string
+  dateOfBirth?: Date
   contactNo: string
   emergencyContactNo: string
   bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-'
