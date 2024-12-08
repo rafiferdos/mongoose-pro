@@ -42,7 +42,7 @@ AcademicSemesterSchema.pre('save', async function (next) {
     year: this.year,
   })
   if (isAcademicSemesterExists) {
-    next(new Error('Academic Semester already exists'))
+    throw new Error('Academic Semester already exists')
   } else {
     next()
   }
