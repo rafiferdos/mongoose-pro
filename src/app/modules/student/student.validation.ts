@@ -76,7 +76,7 @@ export const CreateStudentValidationSchema = z.object({
           message: 'Gender should be either Male or Female',
         }),
       }),
-      dateOfBirth: z.string().optional(),
+      dateOfBirth: z.date().optional(),
       contactNo: z.string().nonempty('Contact No is required for Student'),
       emergencyContactNo: z
         .string()
