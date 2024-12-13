@@ -76,7 +76,13 @@ export const CreateStudentValidationSchema = z.object({
           message: 'Gender should be either Male or Female',
         }),
       }),
-      dateOfBirth: z.date().optional(),
+      dateOfBirth: z
+        .string()
+        .optional()
+        .refine((val) => val === undefined || !isNaN(Date.parse(val)), {
+          message: 'Invalid date format',
+        })
+        .transform((val) => val ? new Date(val) : undefined),
       contactNo: z.string().nonempty('Contact No is required for Student'),
       emergencyContactNo: z
         .string()
