@@ -16,14 +16,6 @@ const UserNameSchema = new Schema<TUserName>({
     trim: true,
     required: [true, 'First Name is required'],
     maxlength: [30, 'First Name should not be more than 30 characters'],
-    // validate: {
-    //   validator: function(value : string){
-    //     //capitalize name
-    //     const capitalized = value.charAt(0).toUpperCase() + value.slice(1)
-    //     return capitalized === value ? true : false
-    //   },
-    //   message: 'First Name should be capitalized'
-    // }
     validate: {
       validator: (value) => validator.isAlpha(value),
       message: 'First Name should only contain alphabets',
@@ -33,14 +25,6 @@ const UserNameSchema = new Schema<TUserName>({
     type: String,
     trim: true,
     maxlength: [30, 'Middle Name should not be more than 30 characters'],
-    // validate: {
-    //   validator: function(value : string){
-    //     //capitalize name
-    //     const capitalized = value.charAt(0).toUpperCase() + value.slice(1)
-    //     return capitalized === value ? true : false
-    //   },
-    //   message: 'Middle Name should be capitalized'
-    // }
     validate: {
       validator: (value) => validator.isAlpha(value),
       message: 'Middle Name should only contain alphabets',
@@ -51,14 +35,6 @@ const UserNameSchema = new Schema<TUserName>({
     trim: true,
     required: [true, 'Last Name is required'],
     maxlength: [30, 'Last Name should not be more than 30 characters'],
-    // validate: {
-    //   validator: function(value : string){
-    //     //capitalize name
-    //     const capitalized = value.charAt(0).toUpperCase() + value.slice(1)
-    //     return capitalized === value ? true : false
-    //   },
-    //   message: 'Last Name should be capitalized'
-    // }
     validate: {
       validator: (value) => validator.isAlpha(value),
       message: 'Last Name should only contain alphabets',
@@ -183,6 +159,10 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethod>(
       trim: true,
       type: LocalGuardianSchema,
       required: [true, 'Local guardian details are required'],
+    },
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'academicSemester',
     },
     profileImage: { type: String, trim: true },
     isDeleted: {

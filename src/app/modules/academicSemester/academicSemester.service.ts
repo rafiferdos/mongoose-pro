@@ -9,6 +9,26 @@ const createAcademicSemesterIntoDB = async (payload: TAcademicSemester) => {
   return await AcademicSemesterModel.create(payload)
 }
 
+const getAllAcademicSemesterFromDB = async () => {
+  return await AcademicSemesterModel.find()
+}
+
+const getSingleAcademicSemesterFromDB = async (id: string) => {
+  return await AcademicSemesterModel.findById(id)
+}
+
+const updateAcademicSemesterIntoDB = async (
+  id: string,
+  payload: TAcademicSemester,
+) => {
+  return await AcademicSemesterModel.findByIdAndUpdate(id, payload, {
+    new: true,
+  })
+}
+
 export const academicSemesterServices = {
   createAcademicSemesterIntoDB,
+  getAllAcademicSemesterFromDB,
+  getSingleAcademicSemesterFromDB,
+  updateAcademicSemesterIntoDB,
 }
