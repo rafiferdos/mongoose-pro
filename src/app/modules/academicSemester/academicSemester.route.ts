@@ -23,7 +23,7 @@ router.get(
   academicSemesterControllers.getSingleAcademicSemester,
 )
 
-router.put(
+router.patch(
   '/update-academic-semester/:id',
   validateRequest(
     AcademicSemesterValidations.updateAcademicSemesterValidationSchema,

@@ -19,9 +19,16 @@ const getSingleAcademicSemesterFromDB = async (id: string) => {
 
 const updateAcademicSemesterIntoDB = async (
   id: string,
-  payload: TAcademicSemester,
+  payload: Partial<TAcademicSemester>,
 ) => {
-  return await AcademicSemesterModel.findByIdAndUpdate(id, payload, {
+  if (
+    payload.name &&
+    payload.code &&
+    academicSemesterNameCodeMapper[payload.name] !== payload.code
+  ) {
+    throw new Error('Invalid Academic Semester Code')
+  }
+  return await AcademicSemesterModel.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   })
 }
