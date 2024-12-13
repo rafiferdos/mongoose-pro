@@ -15,7 +15,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     payload.admissionSemester,
   )
   if (admissionSemester) {
-    userData.id = generateStudentId(admissionSemester)
+    userData.id = await generateStudentId(admissionSemester)
   } else {
     throw new Error('Admission semester not found')
   }
