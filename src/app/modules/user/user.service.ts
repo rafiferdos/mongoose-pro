@@ -1,21 +1,35 @@
+import { NextFunction } from 'express'
 import config from '../../config'
+import { AcademicSemesterModel } from '../academicSemester/academicSemester.model'
 import { TStudent } from '../student/student.interface'
 import { Student } from '../student/student.model'
 import { TUser } from './user.interface'
 import { User } from './user.model'
+import { generateStudentId } from './user.utils'
 
-const createStudentIntoDB = async (password: string, studentData: TStudent) => {
+const createStudentIntoDB = async (
+  password: string,
+  payload: TStudent,
+  next: NextFunction,
+) => {
   const userData: Partial<TUser> = {}
   userData.password = password || (config.default_password as string)
   userData.role = 'student'
-  // make id in yyyy-semester_code-4_digit_random_number format incrementally for each student
-  
+
+  const admissionSemester = await AcademicSemesterModel.findById(
+    payload.admissionSemester,
+  )
+  if (admissionSemester) {
+    userData.id = generateStudentId(admissionSemester)
+  } else {
+    next(new Error('Invalid Admission Semester'))
+  }
 
   const newUser = await User.create(userData)
   if (Object.keys(newUser).length) {
-    studentData.id = newUser.id
-    studentData.user = newUser._id
-    const newStudent = await Student.create(studentData)
+    payload.id = newUser.id
+    payload.user = newUser._id
+    const newStudent = await Student.create(payload)
     return newStudent
   }
 }
