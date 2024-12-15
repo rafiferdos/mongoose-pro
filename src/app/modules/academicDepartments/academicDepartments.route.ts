@@ -14,7 +14,7 @@ router.post(
 )
 
 router.get(
-  'get-all-academic-departments',
+  '/get-all-academic-departments',
   academicDepartmentControllers.getAllAcademicDepartments,
 )
 
