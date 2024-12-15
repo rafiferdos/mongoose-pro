@@ -26,6 +26,17 @@ academicDepartmentSchema.pre('save', async function (next) {
   }
 })
 
+academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
+  const query = this.getQuery()
+  const isDepartmentExist = await academicDepartmentModel.findOne({ query })
+
+  if (!isDepartmentExist) {
+    throw new Error('This department does not exists')
+  } else {
+    next()
+  }
+})
+
 export const academicDepartmentModel = model(
   'academicDepartment',
   academicDepartmentSchema,
