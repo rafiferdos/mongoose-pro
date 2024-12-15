@@ -12,3 +12,6 @@ router.post(
   ),
   academicDepartmentControllers.createAcademicDepartment,
 )
+
+router.get('get-all-academic-departments', academicDepartmentControllers.getAllAcademicDepartments)
+
