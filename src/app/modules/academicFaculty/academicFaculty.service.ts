@@ -15,13 +15,9 @@ const updateAcademicFacultyInDB = async (
   payload: Partial<TAcademicFaculty>,
 ) => await academicFacultyModel.findByIdAndUpdate(id, payload, { new: true })
 
-const deleteAcademicFacultyFromDB = async (id: string) =>
-  await academicFacultyModel.findByIdAndDelete(id)
-
 export const academicFacultyService = {
   createAcademicFacultyIntoDB,
   getAllAcademicFacultiesFromDB,
   getSingleAcademicFacultyFromDB,
   updateAcademicFacultyInDB,
-  deleteAcademicFacultyFromDB,
 }
