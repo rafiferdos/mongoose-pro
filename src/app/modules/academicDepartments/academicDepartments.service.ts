@@ -5,7 +5,9 @@ const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) =>
   await academicDepartmentModel.create(payload)
 
 const getAllAcademicDepartmentsFromDB = async () =>
-  await academicDepartmentModel.find()
+  (await academicDepartmentModel.find()).length === 0
+    ? Promise.reject(new Error('No department found'))
+    : await academicDepartmentModel.find()
 
 const getSingleAcademicDepartmentFromDB = async (id: string) =>
   await academicDepartmentModel.findById(id)
