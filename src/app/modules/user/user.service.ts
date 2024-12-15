@@ -1,4 +1,6 @@
+import { StatusCodes } from 'http-status-codes'
 import config from '../../config'
+import AppError from '../../errors/AppError'
 import { AcademicSemesterModel } from '../academicSemester/academicSemester.model'
 import { TStudent } from '../student/student.interface'
 import { Student } from '../student/student.model'
@@ -17,7 +19,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   if (academicSemester) {
     userData.id = await generateStudentId(academicSemester)
   } else {
-    throw new Error('Academic semester not found')
+    throw new AppError(StatusCodes.NOT_FOUND, 'Academic Semester not found')
   }
 
   const newUser = await User.create(userData)

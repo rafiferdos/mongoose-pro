@@ -1,4 +1,6 @@
+import { StatusCodes } from 'http-status-codes'
 import { model, Schema } from 'mongoose'
+import AppError from '../../errors/AppError'
 
 const academicDepartmentSchema = new Schema(
   {
@@ -20,7 +22,7 @@ academicDepartmentSchema.pre('save', async function (next) {
     name: this.name,
   })
   if (isDepartmentExist) {
-    throw new Error('This department already exists')
+    throw new AppError(StatusCodes.CONFLICT, 'This department already exists')
   }
   next()
 })
@@ -29,7 +31,7 @@ academicDepartmentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery()
   const isDepartmentExist = await academicDepartmentModel.findOne(query)
   if (!isDepartmentExist) {
-    throw new Error('This department does not exists')
+    throw new AppError(StatusCodes.NOT_FOUND, 'This department does not exists')
   }
   next()
 })
