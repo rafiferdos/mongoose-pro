@@ -9,7 +9,8 @@ const createAcademicFacultyValidationSchema = z.object({
 
 const updateAcademicFacultyValidationSchema = z.object({
   name: z.string({
-    invalid_type_error: 'Academic faculty name must be a string',
+      invalid_type_error: 'Academic faculty name must be a string',
+      required_error: 'Academic faculty name is required to update',
   }),
 })
 
