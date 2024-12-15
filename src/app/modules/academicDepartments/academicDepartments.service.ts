@@ -7,10 +7,10 @@ const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) =>
 const getAllAcademicDepartmentsFromDB = async () =>
   (await academicDepartmentModel.find()).length === 0
     ? Promise.reject(new Error('No department found'))
-    : await academicDepartmentModel.find()
+    : await academicDepartmentModel.find().populate('academicFaculty')
 
 const getSingleAcademicDepartmentFromDB = async (id: string) =>
-  await academicDepartmentModel.findById(id)
+  await academicDepartmentModel.findById(id).populate('academicFaculty')
 
 const updateAcademicDepartmentInDB = async (
   id: string,

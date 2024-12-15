@@ -95,6 +95,7 @@ export const CreateStudentValidationSchema = z.object({
       guardianDetails: GuardianValidationSchema,
       localGuardianDetails: LocalGuardianValidationSchema,
       admissionSemester: z.string(),
+      academicDepartment: z.string(),
       profileImage: z.string().optional().or(z.literal('')),
     }),
   }),
