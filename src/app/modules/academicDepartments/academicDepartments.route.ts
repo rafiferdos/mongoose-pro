@@ -15,3 +15,8 @@ router.post(
 
 router.get('get-all-academic-departments', academicDepartmentControllers.getAllAcademicDepartments)
 
+router.get(
+  '/get-single-academic-department/:id',
+  academicDepartmentControllers.getSingleAcademicDepartment,
+)
+
