@@ -1,9 +1,10 @@
 import { Student } from './student.model'
 
-const getAllStudentsFromDB = async () => await Student.find()
+const getAllStudentsFromDB = async () =>
+  await Student.find().populate('academicDepartment').populate('academicSemester')
 
 const getSingleStudentFromDB = async (id: string) =>
-  await Student.aggregate([{ $match: { id: id } }])
+  await Student.findOne({id: id}).populate('academicDepartment', 'academicSemester')
 
 const deleteStudent = async (id: string) =>
   await Student.updateOne({ id: id }, { isDeleted: true })

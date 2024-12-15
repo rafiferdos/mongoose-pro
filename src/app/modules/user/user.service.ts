@@ -11,13 +11,13 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   userData.password = password || (config.default_password as string)
   userData.role = 'student'
 
-  const admissionSemester = await AcademicSemesterModel.findById(
-    payload.admissionSemester,
+  const academicSemester = await AcademicSemesterModel.findById(
+    payload.academicSemester,
   )
-  if (admissionSemester) {
-    userData.id = await generateStudentId(admissionSemester)
+  if (academicSemester) {
+    userData.id = await generateStudentId(academicSemester)
   } else {
-    throw new Error('Admission semester not found')
+    throw new Error('Academic semester not found')
   }
 
   const newUser = await User.create(userData)
