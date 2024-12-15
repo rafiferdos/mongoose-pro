@@ -15,7 +15,7 @@ const academicDepartmentSchema = new Schema(
   { timestamps: true },
 )
 
-export const academicDepartment = model(
+export const academicDepartmentModel = model(
   'academicDepartment',
   academicDepartmentSchema,
 )
