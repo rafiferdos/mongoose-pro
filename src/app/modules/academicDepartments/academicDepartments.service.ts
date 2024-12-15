@@ -15,7 +15,7 @@ const updateAcademicDepartmentInDB = async (
   payload: Partial<TAcademicDepartment>,
 ) => await academicDepartmentModel.findByIdAndUpdate(id, payload, { new: true })
 
-export const academicDepartmentService = {
+export const academicDepartmentServices = {
   createAcademicDepartmentIntoDB,
   getAllAcademicDepartmentsFromDB,
   getSingleAcademicDepartmentFromDB,
