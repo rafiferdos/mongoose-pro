@@ -31,4 +31,4 @@ router.patch(
   academicFacultyController.updateAcademicFaculty,
 )
 
-export default router
+export const AcademicFacultyRoutes = router
