@@ -31,12 +31,12 @@ const getSingleStudentFromDB = catchAsync(async (req, res) => {
 // Update student in database
 const updateStudent = catchAsync(async (req, res) => {
   const { id } = req.params
-  await StudentService.updateStudentIntoDB(id, req.body)
+  const result = await StudentService.updateStudentIntoDB(id, req.body.student)
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Student updated successfully',
-    data: null,
+    data: result,
   })
 })
 
