@@ -31,7 +31,7 @@ const getSingleStudentFromDB = catchAsync(async (req, res) => {
 // Update student in database
 const updateStudent = catchAsync(async (req, res) => {
   const { id } = req.params
-  await StudentService.deleteStudent(id)
+  await StudentService.updateStudentIntoDB(id, req.body)
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
