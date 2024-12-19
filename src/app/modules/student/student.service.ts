@@ -81,7 +81,11 @@ const deleteStudent = async (id: string) => {
   } catch (error) {
     await session.abortTransaction()
     session.endSession()
-    throw error
+    throw new AppError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      'Failed to delete student',
+      `${error}`,
+    )
   }
 }
 

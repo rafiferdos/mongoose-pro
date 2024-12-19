@@ -46,7 +46,11 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   } catch (error) {
     await session.abortTransaction()
     session.endSession()
-    throw error
+    throw new AppError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      'Failed to create student',
+      `${error}`,
+    )
   }
 }
 
