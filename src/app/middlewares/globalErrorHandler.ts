@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { NextFunction, Request, Response } from 'express'
+import { ErrorRequestHandler } from 'express'
 
-const globalErrorHandler = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
+const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   const statusCode = err?.statusCode || 500
   const message = err.message || 'Something went wrong'
   res.status(statusCode).json({
