@@ -26,33 +26,28 @@ const getSingleStudentFromDB = async (id: string) =>
     .populate('academicSemester')
 
 const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
-  const session = await mongoose.startSession()
-  try {
-    session.startTransaction()
-    const updatedStudent = await Student.findOneAndUpdate(
-      { id },
-      { $set: payload },
-      { new: true, session },
-    )
-    if (!updatedStudent) {
-      throw new AppError(StatusCodes.NOT_MODIFIED, 'Failed to update student')
+  const { name, guardianDetails, localGuardianDetails, ...rest } = payload
+  const modifiedUpdatedData: Record<string, unknown> = { ...rest }
+  if (name && Object.keys(name).length > 0) {
+    for (const [key, value] of Object.entries(name)) {
+      modifiedUpdatedData[`name.${key}`] = value
     }
-    const updatedUser = await User.findOneAndUpdate(
-      { id },
-      { $set: payload },
-      { new: true, session },
-    )
-    if (!updatedUser) {
-      throw new AppError(StatusCodes.NOT_MODIFIED, 'Failed to update student')
-    }
-    await session.commitTransaction()
-    await session.endSession()
-    return updatedStudent
-  } catch (error) {
-    await session.abortTransaction()
-    session.endSession()
-    throw error
   }
+  if (guardianDetails && Object.keys(guardianDetails).length > 0) {
+    for (const [key, value] of Object.entries(guardianDetails)) {
+      modifiedUpdatedData[`guardianDetails.${key}`] = value
+    }
+  }
+  if (localGuardianDetails && Object.keys(localGuardianDetails).length > 0) {
+    for (const [key, value] of Object.entries(localGuardianDetails)) {
+      modifiedUpdatedData[`localGuardianDetails.${key}`] = value
+    }
+  }
+  const updatedStudent = await Student.findOneAndUpdate({ id }, modifiedUpdatedData, { new: true, runValidators: true })
+  if (!updatedStudent) {
+    throw new AppError(StatusCodes.NOT_FOUND, 'Failed to update student')
+  }
+  return updatedStudent
 }
 
 const deleteStudent = async (id: string) => {
